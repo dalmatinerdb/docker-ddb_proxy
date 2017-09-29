@@ -7,15 +7,15 @@ MAINTAINER Heinz N. Gies <heinz@project-fifo.net>
 ##
 ###################
 
-ENV DP_VSN=0.3.2p4
+ENV DP_VSN=packaging
 ENV DP_PATH=/dpx
 
 RUN cd / \
-    && env GIT_SSL_NO_VERIFY=true git clone -b $DP_VSN http://github.com/dalmatinerdb/ddb_proxy.git ddb_proxy.git
+    && env GIT_SSL_NO_VERIFY=true git clone -b $DP_VSN http://github.com/kevinmeziere/ddb_proxy.git ddb_proxy.git
 
 RUN cd ddb_proxy.git \
     && env GIT_SSL_NO_VERIFY=true git checkout $DP_REF \
-    && make rel \
+    && ./rebar3 as prod release \
     && mv /ddb_proxy.git/_build/prod/rel/dalmatinerpx $DP_PATH \
     && rm -rf $DP_PATH/lib/*/c_src \
     && cd / \
